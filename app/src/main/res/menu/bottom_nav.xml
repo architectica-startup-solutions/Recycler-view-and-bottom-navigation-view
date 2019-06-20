@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_girl"
+        android:icon="@drawable/icons8_female_24"
+        android:title="Girls" />
+    <item
+        android:id="@+id/nav_boys"
+        android:icon="@drawable/icons8_male_24"
+        android:title="Boys" />
+    <item
+        android:id="@+id/nav_individuals"
+        android:icon="@drawable/icons8_user_avatar_24"
+        android:title="Single" />
+    <item
+        android:id="@+id/nav_family"
+        android:icon="@drawable/icons8_guardian_24"
+        android:title="Family" />
+</menu>
