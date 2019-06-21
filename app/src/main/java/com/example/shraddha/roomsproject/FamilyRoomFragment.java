@@ -1,5 +1,6 @@
 package com.example.shraddha.roomsproject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,14 +29,15 @@ public class FamilyRoomFragment extends Fragment {
     List<String> mRent;
     List<String> mImages;
     List<String> mCity;
+    ProgressDialog pd;
+    TextView mToolText;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference, mReference;
+    private LayoutInflater mInflater;
     RecyclerView mRoomsRecyclerView1;
     RoomAdapter mRoomAdapter1;
-    TextView mToolText;
-    private LayoutInflater mInflater;
-    private Context context;
     private Toolbar toolbar;
+    private Context context;
 
     @Nullable
     @Override
@@ -49,10 +51,9 @@ public class FamilyRoomFragment extends Fragment {
         mReference = mFirebaseDatabase.getReference();
         mRoomsRecyclerView1 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
         toolbar = (Toolbar) view.findViewById(R.id.room_toolbar);
-
-        mDatabaseReference = mFirebaseDatabase.getReference("Family/");
-        assignValues(mDatabaseReference);
-
+        pd = new ProgressDialog(context);
+        pd.setMessage("Loading...");
+        pd.show();
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -88,9 +89,10 @@ public class FamilyRoomFragment extends Fragment {
 
             }
         });
-        mRoomAdapter1 = new RoomAdapter(context, mImages, mCity, mRent, "Family Rooms");
+        mRoomAdapter1 = new RoomAdapter(context, mImages, mCity, mRent, "Family Room");
         mRoomsRecyclerView1.setAdapter(mRoomAdapter1);
         mRoomsRecyclerView1.setLayoutManager(new LinearLayoutManager(context));
         mRoomsRecyclerView1.setMotionEventSplittingEnabled(false);
+        pd.dismiss();
     }
 }

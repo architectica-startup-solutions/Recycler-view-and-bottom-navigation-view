@@ -1,5 +1,6 @@
 package com.example.shraddha.roomsproject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +34,7 @@ public class IndividualsRoomFragment extends Fragment {
     DatabaseReference mDatabaseReference, mReference;
     RecyclerView mRoomsRecyclerView3;
     RoomAdapter mRoomAdapter3;
+    ProgressDialog pd;
     TextView mToolText;
 
     @Nullable
@@ -45,11 +47,10 @@ public class IndividualsRoomFragment extends Fragment {
         context = container.getContext();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mReference = mFirebaseDatabase.getReference();
+        pd = new ProgressDialog(context);
+        pd.setMessage("Loading...");
+        pd.show();
         mRoomsRecyclerView3 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
-
-        mDatabaseReference = mFirebaseDatabase.getReference("Individuals/");
-        assignValues(mDatabaseReference);
-
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -85,9 +86,10 @@ public class IndividualsRoomFragment extends Fragment {
 
             }
         });
-        mRoomAdapter3 =new RoomAdapter(context, mImages, mCity, mRent, "Single Rooms");
+        mRoomAdapter3 = new RoomAdapter(context, mImages, mCity, mRent, "Single Room");
         mRoomsRecyclerView3.setAdapter(mRoomAdapter3);
         mRoomsRecyclerView3.setLayoutManager(new LinearLayoutManager(context));
         mRoomsRecyclerView3.setMotionEventSplittingEnabled(false);
+        pd.dismiss();
     }
 }
