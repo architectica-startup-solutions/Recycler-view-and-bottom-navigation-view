@@ -51,10 +51,18 @@ public class FamilyRoomFragment extends Fragment {
         mReference = mFirebaseDatabase.getReference();
         mRoomsRecyclerView1 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
         toolbar = (Toolbar) view.findViewById(R.id.room_toolbar);
+
+
         pd = new ProgressDialog(context);
         pd.setMessage("Loading...");
         pd.setTitle("Syncing...");
         pd.show();
+
+        mDatabaseReference = mFirebaseDatabase.getReference("Family/");
+        assignValues(mDatabaseReference);
+
+        mDatabaseReference = mFirebaseDatabase.getReference("Family/");
+        assignValues(mDatabaseReference);
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -70,6 +78,7 @@ public class FamilyRoomFragment extends Fragment {
         return view;
     }
 
+
     public void assignValues(DatabaseReference databaseReference) {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,6 +92,7 @@ public class FamilyRoomFragment extends Fragment {
                     mCity.add(childSnap.child("City").getValue(String.class));
                     mRent.add(childSnap.child("Rent").getValue(String.class));
                 }
+                pd.dismiss();
             }
 
             @Override
@@ -94,6 +104,5 @@ public class FamilyRoomFragment extends Fragment {
         mRoomsRecyclerView1.setAdapter(mRoomAdapter1);
         mRoomsRecyclerView1.setLayoutManager(new LinearLayoutManager(context));
         mRoomsRecyclerView1.setMotionEventSplittingEnabled(false);
-        pd.dismiss();
     }
 }

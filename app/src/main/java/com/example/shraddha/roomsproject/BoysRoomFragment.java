@@ -28,14 +28,14 @@ public class BoysRoomFragment extends Fragment {
     List<String> mRent;
     List<String> mImages;
     List<String> mCity;
-    private LayoutInflater mInflater;
-    private Context context;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference, mReference;
     RecyclerView mRoomsRecyclerView4;
     RoomAdapter mRoomAdapter4;
     TextView mToolText;
     ProgressDialog pd;
+    private LayoutInflater mInflater;
+    private Context context;
 
     @Nullable
     @Override
@@ -47,11 +47,18 @@ public class BoysRoomFragment extends Fragment {
         context = container.getContext();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mReference = mFirebaseDatabase.getReference();
+        mRoomsRecyclerView4 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
+
+
         pd = new ProgressDialog(context);
         pd.setMessage("Loading...");
         pd.setTitle("Syncing...");
         pd.show();
-        mRoomsRecyclerView4 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
+
+        mDatabaseReference = mFirebaseDatabase.getReference("Boys/");
+        assignValues(mDatabaseReference);
+
+
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -80,6 +87,7 @@ public class BoysRoomFragment extends Fragment {
                     mCity.add(childSnap.child("City").getValue(String.class));
                     mRent.add(childSnap.child("Rent").getValue(String.class));
                 }
+                pd.dismiss();
             }
 
             @Override
@@ -91,6 +99,5 @@ public class BoysRoomFragment extends Fragment {
         mRoomsRecyclerView4.setAdapter(mRoomAdapter4);
         mRoomsRecyclerView4.setLayoutManager(new LinearLayoutManager(context));
         mRoomsRecyclerView4.setMotionEventSplittingEnabled(false);
-        pd.dismiss();
     }
 }
