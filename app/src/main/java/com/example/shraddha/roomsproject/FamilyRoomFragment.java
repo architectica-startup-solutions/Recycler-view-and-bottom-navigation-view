@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +29,6 @@ public class FamilyRoomFragment extends Fragment {
     List<String> mImages;
     List<String> mCity;
     ProgressDialog pd;
-    TextView mToolText;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference, mReference;
     private LayoutInflater mInflater;
