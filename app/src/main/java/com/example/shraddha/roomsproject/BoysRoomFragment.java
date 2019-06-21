@@ -49,6 +49,7 @@ public class BoysRoomFragment extends Fragment {
         mReference = mFirebaseDatabase.getReference();
         pd = new ProgressDialog(context);
         pd.setMessage("Loading...");
+        pd.setTitle("Syncing...");
         pd.show();
         mRoomsRecyclerView4 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
         mReference.addValueEventListener(new ValueEventListener() {

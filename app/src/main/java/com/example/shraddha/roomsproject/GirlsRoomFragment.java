@@ -49,6 +49,7 @@ public class GirlsRoomFragment extends Fragment {
         mRoomsRecyclerView2 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
         pd = new ProgressDialog(context);
         pd.setMessage("Loading...");
+        pd.setTitle("Syncing...");
         pd.show();
         mReference.addValueEventListener(new ValueEventListener() {
             @Override

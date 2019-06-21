@@ -53,6 +53,7 @@ public class FamilyRoomFragment extends Fragment {
         toolbar = (Toolbar) view.findViewById(R.id.room_toolbar);
         pd = new ProgressDialog(context);
         pd.setMessage("Loading...");
+        pd.setTitle("Syncing...");
         pd.show();
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
