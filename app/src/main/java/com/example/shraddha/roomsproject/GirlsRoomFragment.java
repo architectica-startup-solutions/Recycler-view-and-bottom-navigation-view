@@ -1,5 +1,6 @@
 package com.example.shraddha.roomsproject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class GirlsRoomFragment extends Fragment {
 
@@ -35,6 +40,7 @@ public class GirlsRoomFragment extends Fragment {
     RecyclerView mRoomsRecyclerView2;
     RoomAdapter mRoomAdapter2;
     TextView mToolText;
+    ProgressDialog pd;
 
     @Nullable
     @Override
@@ -47,6 +53,9 @@ public class GirlsRoomFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mReference = mFirebaseDatabase.getReference();
         mRoomsRecyclerView2 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
+        pd = new ProgressDialog(context);
+        pd.setMessage("Loading...");
+        pd.show();
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -59,6 +68,7 @@ public class GirlsRoomFragment extends Fragment {
 
             }
         });
+
         return view;
     }
 
@@ -82,9 +92,7 @@ public class GirlsRoomFragment extends Fragment {
 
             }
         });
-        mRoomAdapter2 =new RoomAdapter(context, mImages, mCity, mRent, "Girls Rooms");
-        mRoomsRecyclerView2.setAdapter(mRoomAdapter2);
-        mRoomsRecyclerView2.setLayoutManager(new LinearLayoutManager(context));
-        mRoomsRecyclerView2.setMotionEventSplittingEnabled(false);
+
+
     }
 }

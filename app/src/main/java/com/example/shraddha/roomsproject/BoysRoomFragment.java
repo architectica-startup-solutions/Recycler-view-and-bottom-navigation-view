@@ -1,5 +1,6 @@
 package com.example.shraddha.roomsproject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,6 +36,7 @@ public class BoysRoomFragment extends Fragment {
     RecyclerView mRoomsRecyclerView4;
     RoomAdapter mRoomAdapter4;
     TextView mToolText;
+    ProgressDialog pd;
 
     @Nullable
     @Override
@@ -46,6 +48,9 @@ public class BoysRoomFragment extends Fragment {
         context = container.getContext();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mReference = mFirebaseDatabase.getReference();
+        pd = new ProgressDialog(context);
+        pd.setMessage("Loading...");
+        pd.show();
         mRoomsRecyclerView4 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,9 +87,10 @@ public class BoysRoomFragment extends Fragment {
 
             }
         });
-        mRoomAdapter4 =new RoomAdapter(context, mImages, mCity, mRent, "Boys Rooms");
+        mRoomAdapter4 =new RoomAdapter(context, mImages, mCity, mRent, "Boys Room");
         mRoomsRecyclerView4.setAdapter(mRoomAdapter4);
         mRoomsRecyclerView4.setLayoutManager(new LinearLayoutManager(context));
         mRoomsRecyclerView4.setMotionEventSplittingEnabled(false);
+        pd.dismiss();
     }
 }
