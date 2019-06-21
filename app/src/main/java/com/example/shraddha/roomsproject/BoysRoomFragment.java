@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +46,10 @@ public class BoysRoomFragment extends Fragment {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mReference = mFirebaseDatabase.getReference();
         mRoomsRecyclerView4 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
+
+        mDatabaseReference = mFirebaseDatabase.getReference("Boys/");
+        assignValues(mDatabaseReference);
+
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

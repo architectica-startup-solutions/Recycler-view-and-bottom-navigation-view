@@ -28,14 +28,14 @@ public class FamilyRoomFragment extends Fragment {
     List<String> mRent;
     List<String> mImages;
     List<String> mCity;
-    private LayoutInflater mInflater;
-    private Context context;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mDatabaseReference, mReference;
-    private Toolbar toolbar;
     RecyclerView mRoomsRecyclerView1;
     RoomAdapter mRoomAdapter1;
     TextView mToolText;
+    private LayoutInflater mInflater;
+    private Context context;
+    private Toolbar toolbar;
 
     @Nullable
     @Override
@@ -49,6 +49,10 @@ public class FamilyRoomFragment extends Fragment {
         mReference = mFirebaseDatabase.getReference();
         mRoomsRecyclerView1 = (RecyclerView) view.findViewById(R.id.rooms_recycler_view);
         toolbar = (Toolbar) view.findViewById(R.id.room_toolbar);
+
+        mDatabaseReference = mFirebaseDatabase.getReference("Family/");
+        assignValues(mDatabaseReference);
+
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -84,7 +88,7 @@ public class FamilyRoomFragment extends Fragment {
 
             }
         });
-        mRoomAdapter1 =new RoomAdapter(context, mImages, mCity, mRent, "Family Rooms");
+        mRoomAdapter1 = new RoomAdapter(context, mImages, mCity, mRent, "Family Rooms");
         mRoomsRecyclerView1.setAdapter(mRoomAdapter1);
         mRoomsRecyclerView1.setLayoutManager(new LinearLayoutManager(context));
         mRoomsRecyclerView1.setMotionEventSplittingEnabled(false);
